@@ -1,21 +1,23 @@
 /**
-  @Generated MPLAB® Code Configurator Header File
+  Generated Interrupt Manager Source File
 
   @Company:
     Microchip Technology Inc.
 
   @File Name:
-    mcc.h
+    interrupt_manager.c
 
   @Summary:
-    This is the mcc.h file generated using MPLAB® Code Configurator
+    This is the Interrupt Manager file generated using MPLAB® Code Configurator
 
   @Description:
-    This header file provides implementations for driver APIs for all modules selected in the GUI.
+    This header file provides implementations for global interrupt handling.
+    For individual peripheral handlers please see the peripheral driver for
+    all modules selected in the GUI.
     Generation Information :
         Product Revision  :  MPLAB® Code Configurator - v2.25.2
         Device            :  PIC16F1509
-        Version           :  1.02
+        Driver Version    :  1.02
     The generated drivers are tested against the following:
         Compiler          :  XC8 v1.34
         MPLAB             :  MPLAB X v2.35 or v3.00
@@ -44,48 +46,21 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
  */
 
-#ifndef MCC_H
-#define	MCC_H
-#include <xc.h>
-#include "pin_manager.h"
-#include <stdint.h>
-#include <stdbool.h>
 #include "interrupt_manager.h"
-#include "tmr1.h"
-#include "clc1.h"
-#include "clc4.h"
-#include "tmr0.h"
+#include "mcc.h"
 
-#define _XTAL_FREQ  16000000
-
-/**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Initializes the device to the default states configured in the
- *                  MCC GUI
- * @Example
-    SYSTEM_Initialize(void);
- */
-void SYSTEM_Initialize(void);
-
-/**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Initializes the oscillator to the default states configured in the
- *                  MCC GUI
- * @Example
-    OSCILLATOR_Initialize(void);
- */
-void OSCILLATOR_Initialize(void);
-
-
-#endif	/* MCC_H */
+void interrupt INTERRUPT_InterruptManager(void) {
+    // interrupt handler
+    if (PIE1bits.TMR1IE == 1 && PIR1bits.TMR1IF == 1) {
+        TMR1_ISR();
+    } else if (INTCONbits.TMR0IE == 1 && INTCONbits.TMR0IF == 1) {
+        TMR0_ISR();
+    } else if (PIE3bits.CLC1IE == 1 && PIR3bits.CLC1IF == 1) {
+        CLC1_ISR();
+    } else {
+        //Unhandled Interrupt
+    }
+}
 /**
  End of File
  */

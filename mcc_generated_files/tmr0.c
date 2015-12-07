@@ -1,21 +1,21 @@
 /**
-  @Generated MPLAB® Code Configurator Header File
+  TMR0 Generated Driver File
 
-  @Company:
+  @Company
     Microchip Technology Inc.
 
-  @File Name:
-    mcc.h
+  @File Name
+    tmr0.c
 
-  @Summary:
-    This is the mcc.h file generated using MPLAB® Code Configurator
+  @Summary
+    This is the generated driver implementation file for the TMR0 driver using MPLAB® Code Configurator
 
-  @Description:
-    This header file provides implementations for driver APIs for all modules selected in the GUI.
+  @Description
+    This source file provides APIs for TMR0.
     Generation Information :
         Product Revision  :  MPLAB® Code Configurator - v2.25.2
         Device            :  PIC16F1509
-        Version           :  1.02
+        Driver Version    :  2.00
     The generated drivers are tested against the following:
         Compiler          :  XC8 v1.34
         MPLAB             :  MPLAB X v2.35 or v3.00
@@ -44,48 +44,71 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
  */
 
-#ifndef MCC_H
-#define	MCC_H
+/**
+  Section: Included Files
+ */
+
 #include <xc.h>
-#include "pin_manager.h"
-#include <stdint.h>
-#include <stdbool.h>
-#include "interrupt_manager.h"
-#include "tmr1.h"
-#include "clc1.h"
-#include "clc4.h"
 #include "tmr0.h"
 
-#define _XTAL_FREQ  16000000
-
 /**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Initializes the device to the default states configured in the
- *                  MCC GUI
- * @Example
-    SYSTEM_Initialize(void);
+  Section: Global Variables Definitions
  */
-void SYSTEM_Initialize(void);
+
+volatile uint8_t timer0ReloadVal;
 
 /**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Initializes the oscillator to the default states configured in the
- *                  MCC GUI
- * @Example
-    OSCILLATOR_Initialize(void);
+  Section: TMR0 APIs
  */
-void OSCILLATOR_Initialize(void);
+
+void TMR0_Initialize(void) {
+    // Set TMR0 to the options selected in the User Interface
+
+    // PSA assigned; PS 1:128; TMRSE Increment_lo_hi; mask the nWPUEN and INTEDG bits
+    OPTION_REG = (OPTION_REG & 0xC0) | 0xE6 & 0x3F;
+
+    // TMR0 131; 
+    TMR0 = 0x83;
+
+    // Load the TMR value to reload variable
+    timer0ReloadVal = 131;
+
+    // Clear Interrupt flag before enabling the interrupt
+    INTCONbits.TMR0IF = 0;
+
+    // Enabling TMR0 interrupt
+    INTCONbits.TMR0IE = 1;
+}
+
+uint8_t TMR0_ReadTimer(void) {
+    uint8_t readVal;
+
+    readVal = TMR0;
+
+    return readVal;
+}
+
+void TMR0_WriteTimer(uint8_t timerVal) {
+    // Write to the Timer0 register
+    TMR0 = timerVal;
+}
+
+void TMR0_Reload(void) {
+    // Write to the Timer0 register
+    TMR0 = timer0ReloadVal;
+}
+
+void TMR0_ISR(void) {
+
+    // clear the TMR0 interrupt flag
+    INTCONbits.TMR0IF = 0;
+
+    TMR0 = timer0ReloadVal;
 
 
-#endif	/* MCC_H */
+    // add your TMR0 interrupt custom code
+}
+
 /**
- End of File
+  End of File
  */

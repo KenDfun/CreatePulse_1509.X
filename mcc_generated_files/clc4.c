@@ -1,21 +1,21 @@
 /**
-  @Generated MPLAB® Code Configurator Header File
+  CLC4 Generated Driver File
 
-  @Company:
+  @Company
     Microchip Technology Inc.
 
-  @File Name:
-    mcc.h
+  @File Name
+    clc4.c
 
-  @Summary:
-    This is the mcc.h file generated using MPLAB® Code Configurator
+  @Summary
+    This is the generated driver implementation file for the CLC4 driver using MPLAB® Code Configurator
 
-  @Description:
-    This header file provides implementations for driver APIs for all modules selected in the GUI.
+  @Description
+    This source file provides implementations for driver APIs for CLC4.
     Generation Information :
         Product Revision  :  MPLAB® Code Configurator - v2.25.2
         Device            :  PIC16F1509
-        Version           :  1.02
+        Driver Version    :  2.00
     The generated drivers are tested against the following:
         Compiler          :  XC8 v1.34
         MPLAB             :  MPLAB X v2.35 or v3.00
@@ -44,48 +44,50 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
  */
 
-#ifndef MCC_H
-#define	MCC_H
+/**
+  Section: Included Files
+ */
+
 #include <xc.h>
-#include "pin_manager.h"
-#include <stdint.h>
-#include <stdbool.h>
-#include "interrupt_manager.h"
-#include "tmr1.h"
-#include "clc1.h"
 #include "clc4.h"
-#include "tmr0.h"
-
-#define _XTAL_FREQ  16000000
 
 /**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Initializes the device to the default states configured in the
- *                  MCC GUI
- * @Example
-    SYSTEM_Initialize(void);
+  Section: CLC4 APIs
  */
-void SYSTEM_Initialize(void);
 
-/**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Initializes the oscillator to the default states configured in the
- *                  MCC GUI
- * @Example
-    OSCILLATOR_Initialize(void);
- */
-void OSCILLATOR_Initialize(void);
+void CLC4_Initialize(void) {
+    // Set the CLC4 to the options selected in the User Interface
 
+    // LC4G1POL not_inverted; LC4POL not_inverted; LC4G4POL inverted; LC4G2POL not_inverted; LC4G3POL inverted; 
+    CLC4POL = 0x0C;
 
-#endif	/* MCC_H */
+    // LC4D1S FOSC; LC4D2S LC1OUT; 
+    CLC4SEL0 = 0x44;
+
+    // LC4D3S LC1OUT; LC4D4S SCK; 
+    CLC4SEL1 = 0x00;
+
+    // LC4G1D3N disabled; LC4G1D2N disabled; LC4G1D4T disabled; LC4G1D2T disabled; LC4G1D3T disabled; LC4G1D4N disabled; LC4G1D1T enabled; LC4G1D1N disabled; 
+    CLC4GLS0 = 0x02;
+
+    // LC4G2D2T enabled; LC4G2D1T disabled; LC4G2D1N disabled; LC4G2D4N disabled; LC4G2D2N disabled; LC4G2D3N disabled; LC4G2D3T disabled; LC4G2D4T disabled; 
+    CLC4GLS1 = 0x08;
+
+    // LC4G3D3N disabled; LC4G3D2N disabled; LC4G3D4T disabled; LC4G3D2T disabled; LC4G3D1N disabled; LC4G3D3T disabled; LC4G3D4N disabled; LC4G3D1T disabled; 
+    CLC4GLS2 = 0x00;
+
+    // LC4G4D3N disabled; LC4G4D4N disabled; LC4G4D2N disabled; LC4G4D1N disabled; LC4G4D1T disabled; LC4G4D4T disabled; LC4G4D3T disabled; LC4G4D2T disabled; 
+    CLC4GLS3 = 0x00;
+
+    // LC4EN enabled; LC4MODE 4-input AND; LCINTP disabled; LCINTN disabled; LC4OE enabled; LC4OUT disabled; 
+    CLC4CON = 0xC2;
+
+}
+
+bool CLC4_OutputStatusGet(void) {
+    return (CLC4CONbits.LC4OUT);
+
+}
 /**
  End of File
  */

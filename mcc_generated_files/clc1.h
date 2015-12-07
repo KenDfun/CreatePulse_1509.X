@@ -1,17 +1,17 @@
 /**
-  ADC Generated Driver File
+  CLC1 Generated Driver API Header File
 
   @Company
     Microchip Technology Inc.
 
   @File Name
-    adc.c
+    clc1.h
 
   @Summary
-    This is the generated driver implementation file for the ADC driver using MPLAB® Code Configurator
+    This is the generated header file for the CLC1 driver using MPLAB® Code Configurator
 
   @Description
-    This source file provides implementations for driver APIs for ADC.
+    This header file provides APIs for driver for CLC1.
     Generation Information :
         Product Revision  :  MPLAB® Code Configurator - v2.25.2
         Device            :  PIC16F1509
@@ -44,88 +44,101 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
  */
 
+#ifndef _CLC1_H
+#define _CLC1_H
+
 /**
   Section: Included Files
  */
 
 #include <xc.h>
-#include "adc.h"
-#include "mcc.h"
+#include <stdint.h>
+#include <stdbool.h>
 
-/**
-  Section: Macro Declarations
- */
+#ifdef __cplusplus  // Provide C++ Compatibility
 
-#define ACQ_US_DELAY 5
+extern "C" {
 
-/**
-  Section: ADC Module APIs
- */
+#endif
 
-void ADC_Initialize(void) {
-    // set the ADC to the options selected in the User Interface
+    /**
+      Section: CLC1 APIs
+     */
 
-    // GO_nDONE stop; ADON disabled; CHS AN0; 
-    ADCON0 = 0x00;
+    /**
+      @Summary
+        Initializes the CLC1
 
-    // ADPREF VDD; ADFM left; ADCS FOSC/16; 
-    ADCON1 = 0x50;
+      @Description
+        This routine configures the CLC1 specific control registers
 
-    // TRIGSEL no_auto_trigger; 
-    ADCON2 = 0x00;
+      @Preconditions
+        None
 
-    // ADRESL 0x0; 
-    ADRESL = 0x00;
+      @Returns
+        None
 
-    // ADRESH 0x0; 
-    ADRESH = 0x00;
+      @Param
+        None
+
+      @Comment
+    
+
+      @Example
+        <code>
+        CLC1_Initialize();
+        </code>
+     */
+    void CLC1_Initialize(void);
+
+    /**
+      @Summary
+        CLC1 Interrupt Service Routine
+
+      @Description
+        This is the CLC1 interrupt service routine called by the Interrupt Manager. Place your CLC1 interrupt code here.
+
+      @Preconditions
+        CLC1_Initialize() function should have been called before calling this function
+
+      @Returns
+        None
+
+      @Param
+        None
+
+     */
+    void CLC1_ISR(void);
+    /**
+      @Summary
+        Returns output pin status of the CLC module.
+
+      @Description
+        This routine returns output pin status of the CLC module.
+
+      @Param
+        None.
+
+      @Returns
+        Output pin status
+ 
+      @Example 
+        <code>
+        bool outputStatus;
+        outputStatus = CLC1_OutputStatusGet();
+        </code>
+     */
+
+    bool CLC1_OutputStatusGet(void);
+
+#ifdef __cplusplus  // Provide C++ Compatibility
 
 }
 
-void ADC_StartConversion(adc_channel_t channel) {
-    // select the A/D channel
-    ADCON0bits.CHS = channel;
+#endif
 
-    // Turn on the ADC module
-    ADCON0bits.ADON = 1;
-
-    // Acquisition time delay
-    __delay_us(ACQ_US_DELAY);
-
-    // Start the conversion
-    ADCON0bits.GO_nDONE = 1;
-}
-
-bool ADC_IsConversionDone() {
-    // Start the conversion
-    return (!ADCON0bits.GO_nDONE);
-}
-
-adc_result_t ADC_GetConversionResult(void) {
-    // Conversion finished, return the result
-    return ((ADRESH << 8) + ADRESL);
-}
-
-adc_result_t ADC_GetConversion(adc_channel_t channel) {
-    // Select the A/D channel
-    ADCON0bits.CHS = channel;
-
-    // Turn on the ADC module
-    ADCON0bits.ADON = 1;
-
-    // Acquisition time delay
-    __delay_us(ACQ_US_DELAY);
-
-    // Start the conversion
-    ADCON0bits.GO_nDONE = 1;
-
-    // Wait for the conversion to finish
-    while (ADCON0bits.GO_nDONE) {
-    }
-
-    // Conversion finished, return the result
-    return ((ADRESH << 8) + ADRESL);
-}
+#endif  // _CLC1_H
 /**
  End of File
  */
+

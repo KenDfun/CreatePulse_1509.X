@@ -1,17 +1,17 @@
 /**
-  ADC Generated Driver File
+  CLC1 Generated Driver File
 
   @Company
     Microchip Technology Inc.
 
   @File Name
-    adc.c
+    clc1.c
 
   @Summary
-    This is the generated driver implementation file for the ADC driver using MPLAB® Code Configurator
+    This is the generated driver implementation file for the CLC1 driver using MPLAB® Code Configurator
 
   @Description
-    This source file provides implementations for driver APIs for ADC.
+    This source file provides implementations for driver APIs for CLC1.
     Generation Information :
         Product Revision  :  MPLAB® Code Configurator - v2.25.2
         Device            :  PIC16F1509
@@ -49,82 +49,53 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  */
 
 #include <xc.h>
-#include "adc.h"
-#include "mcc.h"
+#include "clc1.h"
 
 /**
-  Section: Macro Declarations
+  Section: CLC1 APIs
  */
 
-#define ACQ_US_DELAY 5
+void CLC1_Initialize(void) {
+    // Set the CLC1 to the options selected in the User Interface
 
-/**
-  Section: ADC Module APIs
- */
+    // LC1G4POL not_inverted; LC1G1POL not_inverted; LC1G2POL not_inverted; LC1G3POL not_inverted; LC1POL not_inverted; 
+    CLC1POL = 0x00;
 
-void ADC_Initialize(void) {
-    // set the ADC to the options selected in the User Interface
+    // LC1D1S TMR1IF; LC1D2S TMR0IF; 
+    CLC1SEL0 = 0x16;
 
-    // GO_nDONE stop; ADON disabled; CHS AN0; 
-    ADCON0 = 0x00;
+    // LC1D3S LC1OUT; LC1D4S NCO1OUT; 
+    CLC1SEL1 = 0x00;
 
-    // ADPREF VDD; ADFM left; ADCS FOSC/16; 
-    ADCON1 = 0x50;
+    // LC1G1D3T disabled; LC1G1D2T disabled; LC1G1D1T enabled; LC1G1D4N disabled; LC1G1D1N disabled; LC1G1D2N disabled; LC1G1D3N disabled; LC1G1D4T disabled; 
+    CLC1GLS0 = 0x02;
 
-    // TRIGSEL no_auto_trigger; 
-    ADCON2 = 0x00;
+    // LC1G2D4N disabled; LC1G2D3N disabled; LC1G2D2N disabled; LC1G2D4T disabled; LC1G2D3T disabled; LC1G2D2T disabled; LC1G2D1N disabled; LC1G2D1T disabled; 
+    CLC1GLS1 = 0x00;
 
-    // ADRESL 0x0; 
-    ADRESL = 0x00;
+    // LC1G3D4N disabled; LC1G3D2N disabled; LC1G3D1N disabled; LC1G3D3N disabled; LC1G3D3T disabled; LC1G3D4T disabled; LC1G3D1T disabled; LC1G3D2T enabled; 
+    CLC1GLS2 = 0x08;
 
-    // ADRESH 0x0; 
-    ADRESH = 0x00;
+    // LC1G4D1T disabled; LC1G4D4T disabled; LC1G4D2N disabled; LC1G4D3N disabled; LC1G4D4N disabled; LC1G4D1N disabled; LC1G4D3T disabled; LC1G4D2T disabled; 
+    CLC1GLS3 = 0x00;
 
+    // LC1MODE SR latch; LC1EN enabled; LCINTP disabled; LCINTN enabled; LC1OUT disabled; LC1OE disabled; 
+    CLC1CON = 0x8B;
+
+    // Clear the CLC interrupt flag
+    PIR3bits.CLC1IF = 0;
+    // Enabling CLC1 interrupt.
+    PIE3bits.CLC1IE = 1;
 }
 
-void ADC_StartConversion(adc_channel_t channel) {
-    // select the A/D channel
-    ADCON0bits.CHS = channel;
-
-    // Turn on the ADC module
-    ADCON0bits.ADON = 1;
-
-    // Acquisition time delay
-    __delay_us(ACQ_US_DELAY);
-
-    // Start the conversion
-    ADCON0bits.GO_nDONE = 1;
+void CLC1_ISR(void) {
+    // Clear the CLC interrupt flag
+    PIR3bits.CLC1IF = 0;
 }
 
-bool ADC_IsConversionDone() {
-    // Start the conversion
-    return (!ADCON0bits.GO_nDONE);
-}
+bool CLC1_OutputStatusGet(void) {
+    return (CLC1CONbits.LC1OUT);
 
-adc_result_t ADC_GetConversionResult(void) {
-    // Conversion finished, return the result
-    return ((ADRESH << 8) + ADRESL);
-}
-
-adc_result_t ADC_GetConversion(adc_channel_t channel) {
-    // Select the A/D channel
-    ADCON0bits.CHS = channel;
-
-    // Turn on the ADC module
-    ADCON0bits.ADON = 1;
-
-    // Acquisition time delay
-    __delay_us(ACQ_US_DELAY);
-
-    // Start the conversion
-    ADCON0bits.GO_nDONE = 1;
-
-    // Wait for the conversion to finish
-    while (ADCON0bits.GO_nDONE) {
-    }
-
-    // Conversion finished, return the result
-    return ((ADRESH << 8) + ADRESL);
 }
 /**
  End of File

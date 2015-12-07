@@ -1,21 +1,21 @@
 /**
-  @Generated MPLAB® Code Configurator Header File
+  CLC4 Generated Driver API Header File
 
-  @Company:
+  @Company
     Microchip Technology Inc.
 
-  @File Name:
-    mcc.h
+  @File Name
+    clc4.h
 
-  @Summary:
-    This is the mcc.h file generated using MPLAB® Code Configurator
+  @Summary
+    This is the generated header file for the CLC4 driver using MPLAB® Code Configurator
 
-  @Description:
-    This header file provides implementations for driver APIs for all modules selected in the GUI.
+  @Description
+    This header file provides APIs for driver for CLC4.
     Generation Information :
         Product Revision  :  MPLAB® Code Configurator - v2.25.2
         Device            :  PIC16F1509
-        Version           :  1.02
+        Driver Version    :  2.00
     The generated drivers are tested against the following:
         Compiler          :  XC8 v1.34
         MPLAB             :  MPLAB X v2.35 or v3.00
@@ -44,48 +44,83 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
  */
 
-#ifndef MCC_H
-#define	MCC_H
+#ifndef _CLC4_H
+#define _CLC4_H
+
+/**
+  Section: Included Files
+ */
+
 #include <xc.h>
-#include "pin_manager.h"
 #include <stdint.h>
 #include <stdbool.h>
-#include "interrupt_manager.h"
-#include "tmr1.h"
-#include "clc1.h"
-#include "clc4.h"
-#include "tmr0.h"
 
-#define _XTAL_FREQ  16000000
+#ifdef __cplusplus  // Provide C++ Compatibility
 
-/**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Initializes the device to the default states configured in the
- *                  MCC GUI
- * @Example
-    SYSTEM_Initialize(void);
- */
-void SYSTEM_Initialize(void);
+extern "C" {
 
-/**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Initializes the oscillator to the default states configured in the
- *                  MCC GUI
- * @Example
-    OSCILLATOR_Initialize(void);
- */
-void OSCILLATOR_Initialize(void);
+#endif
 
+    /**
+      Section: CLC4 APIs
+     */
 
-#endif	/* MCC_H */
+    /**
+      @Summary
+        Initializes the CLC4
+
+      @Description
+        This routine configures the CLC4 specific control registers
+
+      @Preconditions
+        None
+
+      @Returns
+        None
+
+      @Param
+        None
+
+      @Comment
+    
+
+      @Example
+        <code>
+        CLC4_Initialize();
+        </code>
+     */
+    void CLC4_Initialize(void);
+
+    /**
+      @Summary
+        Returns output pin status of the CLC module.
+
+      @Description
+        This routine returns output pin status of the CLC module.
+
+      @Param
+        None.
+
+      @Returns
+        Output pin status
+ 
+      @Example 
+        <code>
+        bool outputStatus;
+        outputStatus = CLC4_OutputStatusGet();
+        </code>
+     */
+
+    bool CLC4_OutputStatusGet(void);
+
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+}
+
+#endif
+
+#endif  // _CLC4_H
 /**
  End of File
  */
+

@@ -59,40 +59,40 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define PULL_UP_ENABLED      1
 #define PULL_UP_DISABLED     0
 
-// get/set IO_RA2 aliases
-#define IO_RA2_TRIS               TRISA2
-#define IO_RA2_LAT                LATA2
-#define IO_RA2_PORT               RA2
-#define IO_RA2_WPU                WPUA2
-#define IO_RA2_ANS                ANSA2
-#define IO_RA2_SetHigh()    do { LATA2 = 1; } while(0)
-#define IO_RA2_SetLow()   do { LATA2 = 0; } while(0)
-#define IO_RA2_Toggle()   do { LATA2 = ~LATA2; } while(0)
-#define IO_RA2_GetValue()         RA2
-#define IO_RA2_SetDigitalInput()    do { TRISA2 = 1; } while(0)
-#define IO_RA2_SetDigitalOutput()   do { TRISA2 = 0; } while(0)
+// get/set T0CKI aliases
+#define T0CKI_TRIS               TRISA2
+#define T0CKI_LAT                LATA2
+#define T0CKI_PORT               RA2
+#define T0CKI_WPU                WPUA2
+#define T0CKI_ANS                ANSA2
+#define T0CKI_SetHigh()    do { LATA2 = 1; } while(0)
+#define T0CKI_SetLow()   do { LATA2 = 0; } while(0)
+#define T0CKI_Toggle()   do { LATA2 = ~LATA2; } while(0)
+#define T0CKI_GetValue()         RA2
+#define T0CKI_SetDigitalInput()    do { TRISA2 = 1; } while(0)
+#define T0CKI_SetDigitalOutput()   do { TRISA2 = 0; } while(0)
 
-#define IO_RA2_SetPullup()    do { WPUA2 = 1; } while(0)
-#define IO_RA2_ResetPullup()   do { WPUA2 = 0; } while(0)
-#define IO_RA2_SetAnalogMode()   do { ANSA2 = 1; } while(0)
-#define IO_RA2_SetDigitalMode()   do { ANSA2 = 0; } while(0)
-// get/set channel_AN3 aliases
-#define channel_AN3_TRIS               TRISA4
-#define channel_AN3_LAT                LATA4
-#define channel_AN3_PORT               RA4
-#define channel_AN3_WPU                WPUA4
-#define channel_AN3_ANS                ANSA4
-#define channel_AN3_SetHigh()    do { LATA4 = 1; } while(0)
-#define channel_AN3_SetLow()   do { LATA4 = 0; } while(0)
-#define channel_AN3_Toggle()   do { LATA4 = ~LATA4; } while(0)
-#define channel_AN3_GetValue()         RA4
-#define channel_AN3_SetDigitalInput()    do { TRISA4 = 1; } while(0)
-#define channel_AN3_SetDigitalOutput()   do { TRISA4 = 0; } while(0)
+#define T0CKI_SetPullup()    do { WPUA2 = 1; } while(0)
+#define T0CKI_ResetPullup()   do { WPUA2 = 0; } while(0)
+#define T0CKI_SetAnalogMode()   do { ANSA2 = 1; } while(0)
+#define T0CKI_SetDigitalMode()   do { ANSA2 = 0; } while(0)
+// get/set T1G aliases
+#define T1G_TRIS               TRISA4
+#define T1G_LAT                LATA4
+#define T1G_PORT               RA4
+#define T1G_WPU                WPUA4
+#define T1G_ANS                ANSA4
+#define T1G_SetHigh()    do { LATA4 = 1; } while(0)
+#define T1G_SetLow()   do { LATA4 = 0; } while(0)
+#define T1G_Toggle()   do { LATA4 = ~LATA4; } while(0)
+#define T1G_GetValue()         RA4
+#define T1G_SetDigitalInput()    do { TRISA4 = 1; } while(0)
+#define T1G_SetDigitalOutput()   do { TRISA4 = 0; } while(0)
 
-#define channel_AN3_SetPullup()    do { WPUA4 = 1; } while(0)
-#define channel_AN3_ResetPullup()   do { WPUA4 = 0; } while(0)
-#define channel_AN3_SetAnalogMode()   do { ANSA4 = 1; } while(0)
-#define channel_AN3_SetDigitalMode()   do { ANSA4 = 0; } while(0)
+#define T1G_SetPullup()    do { WPUA4 = 1; } while(0)
+#define T1G_ResetPullup()   do { WPUA4 = 0; } while(0)
+#define T1G_SetAnalogMode()   do { ANSA4 = 1; } while(0)
+#define T1G_SetDigitalMode()   do { ANSA4 = 0; } while(0)
 // get/set IO_RC0 aliases
 #define IO_RC0_TRIS               TRISC0
 #define IO_RC0_LAT                LATC0
@@ -149,6 +149,17 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #define IO_RC3_SetAnalogMode()   do { ANSC3 = 1; } while(0)
 #define IO_RC3_SetDigitalMode()   do { ANSC3 = 0; } while(0)
+// get/set CLC4 aliases
+#define CLC4_TRIS               TRISC4
+#define CLC4_LAT                LATC4
+#define CLC4_PORT               RC4
+#define CLC4_SetHigh()    do { LATC4 = 1; } while(0)
+#define CLC4_SetLow()   do { LATC4 = 0; } while(0)
+#define CLC4_Toggle()   do { LATC4 = ~LATC4; } while(0)
+#define CLC4_GetValue()         RC4
+#define CLC4_SetDigitalInput()    do { TRISC4 = 1; } while(0)
+#define CLC4_SetDigitalOutput()   do { TRISC4 = 0; } while(0)
+
 
 /**
  * @Param
